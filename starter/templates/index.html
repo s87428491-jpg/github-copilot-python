@@ -1,18 +1,102 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Sudoku Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f1f5f2">
+  <title>Sudoku | Daily Grid</title>
   <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/main.js" defer></script>
 </head>
 <body>
-  <h1>Sudoku Game</h1>
-  <div id="sudoku-board"></div>
-  <div class="controls">
-    <button id="new-game">New Game</button>
-    <button id="check-solution">Check Solution</button>
-    <span id="message"></span>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="wordmark" href="/" aria-label="Sudoku home">
+        <span class="wordmark-icon" aria-hidden="true">9</span>
+        <span>DAILY GRID</span>
+      </a>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false">
+        <span class="theme-icon" aria-hidden="true">&#9681;</span>
+        <span id="theme-label">Dark mode</span>
+      </button>
+    </header>
+
+    <main class="game-layout">
+      <section class="game-panel" aria-labelledby="page-title">
+        <div class="game-heading">
+          <div>
+            <p class="eyebrow">A little focus, every day</p>
+            <h1 id="page-title">Sudoku</h1>
+          </div>
+          <div class="timer-block" aria-label="Elapsed time">
+            <span class="eyebrow">TIME</span>
+            <output id="timer" class="timer" aria-live="off">00:00</output>
+          </div>
+        </div>
+
+        <div class="game-toolbar">
+          <label class="difficulty-control" for="difficulty">
+            <span>Difficulty</span>
+            <select id="difficulty" name="difficulty">
+              <option value="easy">Easy</option>
+              <option value="medium" selected>Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </label>
+          <button id="new-game" class="button button-secondary" type="button">
+            <span aria-hidden="true">&#8635;</span> New puzzle
+          </button>
+        </div>
+
+        <div id="sudoku-board" class="sudoku-board" role="group" aria-label="Sudoku puzzle"></div>
+
+        <div class="game-actions">
+          <button id="check-solution" class="button button-primary" type="button">
+            <span aria-hidden="true">&#10003;</span> Check
+          </button>
+          <button id="hint-button" class="button button-secondary" type="button">
+            <span aria-hidden="true">&#10022;</span> Hint
+          </button>
+          <p id="hint-count" class="hint-count">Hints: 0</p>
+        </div>
+
+        <p id="message" class="message" role="status" aria-live="polite"></p>
+
+        <form id="score-form" class="score-form" hidden>
+          <label for="player-name">Add your time to the leaderboard</label>
+          <div class="score-entry">
+            <input id="player-name" name="player-name" type="text" maxlength="24" autocomplete="name" placeholder="Your name" required>
+            <button class="button button-primary" type="submit">Save time</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="leaderboard" aria-labelledby="leaderboard-title">
+        <div class="leaderboard-heading">
+          <div>
+            <p class="eyebrow">Personal bests</p>
+            <h2 id="leaderboard-title">Top 10 times</h2>
+          </div>
+          <span class="leaderboard-count">10</span>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Player</th>
+                <th scope="col">Time</th>
+                <th scope="col">Level</th>
+                <th scope="col">Hints</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-body"></tbody>
+          </table>
+          <p id="leaderboard-empty" class="empty-state">Your completed games will show up here.</p>
+        </div>
+      </aside>
+    </main>
+    <footer class="page-footer"><span>One grid at a time.</span><span>Numbers 1–9, no repeats.</span></footer>
   </div>
-  <script src="/static/main.js"></script>
 </body>
 </html>
